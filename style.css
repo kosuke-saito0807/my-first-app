@@ -23,9 +23,12 @@ h1 { font-family: 'Press Start 2P', monospace; font-size: clamp(22px, 4vw, 38px)
 .game-card { position: relative; overflow: hidden; border: 4px solid #fff; border-radius: 14px; background: #1b2047; box-shadow: 0 15px 0 #080918, 0 24px 35px #08091888; }
 canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
 .message { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: #0c0e20b8; backdrop-filter: blur(3px); }
+.message[hidden] { display: none; }
 .message p { color: #ffcf55; font-family: 'Press Start 2P', monospace; font-size: clamp(18px, 4vw, 30px); line-height: 1.7; margin: 0 0 24px; }
 button { padding: 14px 20px; border: 0; border-radius: 8px; color: #17152d; background: #ffcf55; font: 900 15px 'Zen Kaku Gothic New', sans-serif; cursor: pointer; box-shadow: 0 4px 0 #c18425; }
 button:hover, button:focus-visible { background: #ffe491; transform: translateY(-1px); }
+.music-button { padding: 7px 10px; border: 1px solid #6972a8; border-radius: 6px; color: #d9e6ff; background: #202957; font: 900 11px 'Zen Kaku Gothic New', sans-serif; box-shadow: 0 2px 0 #10142f; }
+.music-button:hover, .music-button:focus-visible { color: #17152d; background: #67d9ff; }
 .controls { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; color: #c7cbea; font-weight: 700; font-size: 14px; }
 .controls p { margin: 22px 0 0; }
 kbd { display: inline-block; min-width: 30px; margin-right: 5px; padding: 4px 7px; border: 1px solid #6972a8; border-radius: 5px; color: #fff; background: #292f5d; text-align: center; font: 12px monospace; }
