@@ -105,6 +105,34 @@ function endGame(title) {
   message.hidden = false;
 }
 
+function drawBlock(platform) {
+  const depth = 18;
+  ctx.fillStyle = '#1b255a';
+  ctx.beginPath();
+  ctx.moveTo(platform.x + platform.w, platform.y);
+  ctx.lineTo(platform.x + platform.w + depth, platform.y - depth);
+  ctx.lineTo(platform.x + platform.w + depth, platform.y + platform.h - depth);
+  ctx.lineTo(platform.x + platform.w, platform.y + platform.h);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#31458f';
+  ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
+  ctx.fillStyle = '#5ff0c2';
+  ctx.beginPath();
+  ctx.moveTo(platform.x, platform.y);
+  ctx.lineTo(platform.x + depth, platform.y - depth);
+  ctx.lineTo(platform.x + platform.w + depth, platform.y - depth);
+  ctx.lineTo(platform.x + platform.w, platform.y);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#b6fff0';
+  ctx.fillRect(platform.x + depth, platform.y - depth, platform.w, 3);
+  ctx.fillStyle = '#243472';
+  for (let x = platform.x + 22; x < platform.x + platform.w - 8; x += 42) {
+    ctx.fillRect(x, platform.y + 22, 18, 4);
+  }
+}
+
 function draw() {
   const sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
   sky.addColorStop(0, '#090d2b'); sky.addColorStop(0.58, '#18245a'); sky.addColorStop(1, '#34215b');
@@ -124,30 +152,26 @@ function draw() {
     const h = 35 + ((x * 7) % 75); ctx.fillStyle = '#111536'; ctx.fillRect(x, 470 - h, 74, h);
     ctx.fillStyle = '#ffcf55'; for (let y = 485 - h; y < 465; y += 18) ctx.fillRect(x + 12, y, 5, 5);
   }
-  for (const platform of world.platforms) {
-    const platformGradient = ctx.createLinearGradient(0, platform.y, 0, platform.y + platform.h);
-    platformGradient.addColorStop(0, '#536fd1'); platformGradient.addColorStop(1, '#283675');
-    ctx.fillStyle = platformGradient; ctx.fillRect(platform.x, platform.y, platform.w, platform.h);
-    ctx.fillStyle = '#5ff0c2'; ctx.fillRect(platform.x, platform.y, platform.w, 9);
-    ctx.fillStyle = '#b6fff0'; ctx.fillRect(platform.x, platform.y, platform.w, 2);
-  }
+  for (const platform of world.platforms) drawBlock(platform);
   for (const coin of world.coins) if (!coin.taken) {
     ctx.fillStyle = '#ffcf55'; ctx.shadowColor = '#ffcf55'; ctx.shadowBlur = 14;
-    ctx.beginPath(); ctx.arc(coin.x, coin.y, 11, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-    ctx.fillStyle = '#fff1a7'; ctx.fillRect(coin.x - 2, coin.y - 7, 4, 14);
+    ctx.beginPath(); ctx.ellipse(coin.x, coin.y - 5, 11, 15, -0.25, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff1a7'; ctx.fillRect(coin.x - 2, coin.y - 14, 4, 18);
   }
   for (const enemy of world.enemies) if (enemy.x > -100) {
     ctx.fillStyle = '#ff477e'; ctx.shadowColor = '#ff477e'; ctx.shadowBlur = 12;
-    ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h); ctx.shadowBlur = 0;
+    ctx.beginPath(); ctx.moveTo(enemy.x, enemy.y + 7); ctx.lineTo(enemy.x + 9, enemy.y); ctx.lineTo(enemy.x + enemy.w, enemy.y); ctx.lineTo(enemy.x + enemy.w, enemy.y + enemy.h); ctx.lineTo(enemy.x, enemy.y + enemy.h); ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0;
+    ctx.fillStyle = '#a72e65'; ctx.fillRect(enemy.x + enemy.w, enemy.y, 9, enemy.h - 7);
     ctx.fillStyle = '#17152d'; ctx.fillRect(enemy.x + 7, enemy.y + 10, 6, 7); ctx.fillRect(enemy.x + 22, enemy.y + 10, 6, 7);
     ctx.fillStyle = '#ff9ab5'; ctx.fillRect(enemy.x + 5, enemy.y + 32, 24, 4);
   }
   ctx.fillStyle = '#67d9ff'; ctx.shadowColor = '#38cfff'; ctx.shadowBlur = 18;
-  ctx.fillRect(player.x + 3, player.y + 10, player.w - 6, player.h - 10);
+  ctx.fillRect(player.x + 3, player.y + 10, player.w - 6, player.h - 10); ctx.shadowBlur = 0;
+  ctx.fillStyle = '#268bbd';
+  ctx.beginPath(); ctx.moveTo(player.x + player.w - 3, player.y + 10); ctx.lineTo(player.x + player.w + 7, player.y + 3); ctx.lineTo(player.x + player.w + 7, player.y + player.h - 3); ctx.lineTo(player.x + player.w - 3, player.y + player.h); ctx.closePath(); ctx.fill();
   ctx.fillStyle = '#24316f'; ctx.fillRect(player.x + 5, player.y, player.w - 10, 17);
   ctx.fillStyle = '#fff'; ctx.fillRect(player.x + 18, player.y + 5, 7, 7);
   ctx.fillStyle = '#ffcf55'; ctx.fillRect(player.x - 4, player.y + player.h - 7, 12, 7); ctx.fillRect(player.x + 22, player.y + player.h - 7, 12, 7);
-  ctx.shadowBlur = 0;
   ctx.restore();
 }
 
