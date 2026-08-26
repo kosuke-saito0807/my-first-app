@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Runner | 横スクロールアクション</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    私の名前は「こうす」です。
+  <main class="game-shell">
+    <header class="game-header">
+      <div>
+        <p class="eyebrow">SIDE-SCROLL ACTION</p>
+        <h1>STAR RUNNER</h1>
+      </div>
+      <div class="stats" aria-live="polite">
+        <span>COINS <strong id="coin-count">0</strong></span>
+        <span>BEST <strong id="best-score">0</strong></span>
+      </div>
+    </header>
+
+    <section class="game-card">
+      <canvas id="game-canvas" width="960" height="540" aria-label="横スクロールアクションゲーム"></canvas>
+      <div class="message" id="message" hidden>
+        <p id="message-title">GAME OVER</p>
+        <button id="restart-button" type="button">もう一度プレイ</button>
+      </div>
+    </section>
+
+    <footer class="controls">
+      <p><kbd>←</kbd><kbd>→</kbd> 移動</p>
+      <p><kbd>Space</kbd> / <kbd>↑</kbd> ジャンプ</p>
+      <p class="hint">コインを集めて、敵を踏んで進もう！</p>
+    </footer>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
